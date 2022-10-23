@@ -92,7 +92,7 @@ begin
  glViewPort(0, 0, vPanel.Width, vPanel.Height);
 
  glClearColor(1.0, 1.0 ,1.0 ,0.0);
- glClear(GL_COLOR_BUFFER_BIT);     // очистка буфера цвета
+ glClear(GL_COLOR_BUFFER_BIT);     // РѕС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° С†РІРµС‚Р°
 
  glGraphics1.glDrawMScale(4, scrollbar1.Position, Panel1,True, scrollbar1.Position+glGraphics1.pps, scrollbar1.Position, 2, 1,  True, 128, -127, 2, 1, 3);
 

@@ -112,7 +112,7 @@ begin
  glViewPort(0, 0, vPanel.Width, vPanel.Height);
 
  glClearColor(1.0, 1.0 ,1.0 ,0.0);
- glClear(GL_COLOR_BUFFER_BIT);     // очистка буфера цвета
+ glClear(GL_COLOR_BUFFER_BIT);     // РѕС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° С†РІРµС‚Р°
 
  start_I:=scrollbar1.Position;
  XMin:=scrollbar1.Position;

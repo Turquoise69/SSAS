@@ -46,7 +46,7 @@ type
   procedure glDrawFFT(vPanel:TPanel; AmpMax, AmpMin, shft_l, shft_b, FreqRange: integer);
   procedure glDrawFFT_Full(vPanel:TPanel; winN, N, YMax, shft_l, shft_b:integer);
   procedure CharDraw(vPanel:TPanel; seg_size:integer; x,y:real; isHoriz,a,b,c,d,e,f,g:boolean);
-  procedure ReadWaveHeader; // чтение заголовка файла
+  procedure ReadWaveHeader; // С‡С‚РµРЅРёРµ Р·Р°РіРѕР»РѕРІРєР° С„Р°Р№Р»Р°
   procedure ReadSamples (startReadIndex :Integer; nReadSamples :Integer; startIBuf :Integer);
   function  GetSampleI (index :Integer) :Integer;
   Property SampleI [index :Integer] :Integer Read GetSampleI;
@@ -54,13 +54,13 @@ type
   function PxToOgl(value, size: integer): real;
   procedure NumDraw(vPanel:TPanel; offset, number:real; axis:string; seg_size,shft_l,shft_b,Xpres,Ypres:integer);
   function sinWX (Const aa, bb, lambda, t, fi_noll :single) :real;
-  function sinc (Const lambda, t :single; width: integer) :real;     // фильтр взвешенного синуса
+  function sinc (Const lambda, t :single; width: integer) :real;     // С„РёР»СЊС‚СЂ РІР·РІРµС€РµРЅРЅРѕРіРѕ СЃРёРЅСѓСЃР°
   function RectPulse (Const coef, shift, t :single) :real;
 end;
 
 const
- glLB=-1.0;                         // Левая граница окна gl
- glRB=1.0;                          // Правая граница
+ glLB=-1.0;                         // Р›РµРІР°СЏ РіСЂР°РЅРёС†Р° РѕРєРЅР° gl
+ glRB=1.0;                          // РџСЂР°РІР°СЏ РіСЂР°РЅРёС†Р°
  PIndex=0;                         // Global const before every type
 
 var
@@ -69,7 +69,7 @@ var
 implementation
 //{$R *.dfm}
 
-// Найти расстояние между двумя соседними точками
+// РќР°Р№С‚Рё СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ РґРІСѓРјСЏ СЃРѕСЃРµРґРЅРёРјРё С‚РѕС‡РєР°РјРё
 function DefCoeff(scale:real): real; overload;
 begin                                   // Res ? (0..2)
  result:=((glRB-glLB)/(scale));
@@ -80,9 +80,9 @@ begin                                   // Res ? (0..2)
  result:=((glRB-glLB)/(scale));
  end;
 
-// Функция вычисления значения порога увеличения масштаба сигналограммы с множителем x2,
-// с которого начинают выделяться отдельные отсчёты сигнала, т.е.
-// начиная с момента, когда расстояние между 2-мя соседними точками > 10 пикселей
+// Р¤СѓРЅРєС†РёСЏ РІС‹С‡РёСЃР»РµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ РїРѕСЂРѕРіР° СѓРІРµР»РёС‡РµРЅРёСЏ РјР°СЃС€С‚Р°Р±Р° СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ СЃ РјРЅРѕР¶РёС‚РµР»РµРј x2,
+// СЃ РєРѕС‚РѕСЂРѕРіРѕ РЅР°С‡РёРЅР°СЋС‚ РІС‹РґРµР»СЏС‚СЊСЃСЏ РѕС‚РґРµР»СЊРЅС‹Рµ РѕС‚СЃС‡С‘С‚С‹ СЃРёРіРЅР°Р»Р°, С‚.Рµ.
+// РЅР°С‡РёРЅР°СЏ СЃ РјРѕРјРµРЅС‚Р°, РєРѕРіРґР° СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ 2-РјСЏ СЃРѕСЃРµРґРЅРёРјРё С‚РѕС‡РєР°РјРё > 10 РїРёРєСЃРµР»РµР№
 function TglGraphics.Calculations(nSamples: integer; vPanel:TPanel): integer;
 var
  i,cnt:integer;
@@ -99,18 +99,18 @@ end;
 
 Constructor TglGraphics.CreateNew (fileName :String);
 begin
- // TO DO: Нужно рассчитать точный размер
+ // TO DO: РќСѓР¶РЅРѕ СЂР°СЃСЃС‡РёС‚Р°С‚СЊ С‚РѕС‡РЅС‹Р№ СЂР°Р·РјРµСЂ
  CreateNew (fileName, 1024*1024*10, 0);
 end;
 
-// Функция перевода координаты пикселя в координатную систему OpenGL
-// value - сколько пикселей, size - длина или ширина панели
+// Р¤СѓРЅРєС†РёСЏ РїРµСЂРµРІРѕРґР° РєРѕРѕСЂРґРёРЅР°С‚С‹ РїРёРєСЃРµР»СЏ РІ РєРѕРѕСЂРґРёРЅР°С‚РЅСѓСЋ СЃРёСЃС‚РµРјСѓ OpenGL
+// value - СЃРєРѕР»СЊРєРѕ РїРёРєСЃРµР»РµР№, size - РґР»РёРЅР° РёР»Рё С€РёСЂРёРЅР° РїР°РЅРµР»Рё
 function TglGraphics.PxToOgl(value, size: integer): real;
 begin
  Result:=(value/Size)*(1.0-(-1.0));
 end;
 
-// Процедура отрисовки единичного знака по типу семисегментного индикатора
+// РџСЂРѕС†РµРґСѓСЂР° РѕС‚СЂРёСЃРѕРІРєРё РµРґРёРЅРёС‡РЅРѕРіРѕ Р·РЅР°РєР° РїРѕ С‚РёРїСѓ СЃРµРјРёСЃРµРіРјРµРЅС‚РЅРѕРіРѕ РёРЅРґРёРєР°С‚РѕСЂР°
 //
 //   __A__
 //  |     |
@@ -120,20 +120,20 @@ end;
 // E|     |C
 //  |__D__|
 //
-// здесь vPanel - панель вывода графики, seg_size - размер одного сегмента индикатора,
-// x,y - положение точки рисования в координатах OpenGL,
-// isHoriz - True если ось абсцисс, False - ординат
-// A,B,C,D,E,F,G - "горят" или нет данные сегменты
+// Р·РґРµСЃСЊ vPanel - РїР°РЅРµР»СЊ РІС‹РІРѕРґР° РіСЂР°С„РёРєРё, seg_size - СЂР°Р·РјРµСЂ РѕРґРЅРѕРіРѕ СЃРµРіРјРµРЅС‚Р° РёРЅРґРёРєР°С‚РѕСЂР°,
+// x,y - РїРѕР»РѕР¶РµРЅРёРµ С‚РѕС‡РєРё СЂРёСЃРѕРІР°РЅРёСЏ РІ РєРѕРѕСЂРґРёРЅР°С‚Р°С… OpenGL,
+// isHoriz - True РµСЃР»Рё РѕСЃСЊ Р°Р±СЃС†РёСЃСЃ, False - РѕСЂРґРёРЅР°С‚
+// A,B,C,D,E,F,G - "РіРѕСЂСЏС‚" РёР»Рё РЅРµС‚ РґР°РЅРЅС‹Рµ СЃРµРіРјРµРЅС‚С‹
 procedure TglGraphics.CharDraw(vPanel:TPanel; seg_size:integer; x,y:real; isHoriz,a,b,c,d,e,f,g: boolean);
 var
 oglX, oglY: real;
 begin
- oglX:=PxToOgl(seg_size,vPanel.Width);    // Перевод размера сегмента из пикселей
- oglY:=PxToOgl(seg_size,vPanel.Height);   // в единицы измерения OpenGL
+ oglX:=PxToOgl(seg_size,vPanel.Width);    // РџРµСЂРµРІРѕРґ СЂР°Р·РјРµСЂР° СЃРµРіРјРµРЅС‚Р° РёР· РїРёРєСЃРµР»РµР№
+ oglY:=PxToOgl(seg_size,vPanel.Height);   // РІ РµРґРёРЅРёС†С‹ РёР·РјРµСЂРµРЅРёСЏ OpenGL
 
- // Последовательный проход по сегментам E,D,C,G,F,A,B
- // и отрисовка их черным или зеленым цветом в зависимости от
- // состояния (on, off)
+ // РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅС‹Р№ РїСЂРѕС…РѕРґ РїРѕ СЃРµРіРјРµРЅС‚Р°Рј E,D,C,G,F,A,B
+ // Рё РѕС‚СЂРёСЃРѕРІРєР° РёС… С‡РµСЂРЅС‹Рј РёР»Рё Р·РµР»РµРЅС‹Рј С†РІРµС‚РѕРј РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚
+ // СЃРѕСЃС‚РѕСЏРЅРёСЏ (on, off)
  if E=True then glColor3f(0.0, 0.0, 0.0) else glColor3f(1.0, 1.0, 1.0);
  glVertex2f(x,y);
  if isHoriz=False then glVertex2f(x,y-oglY) else glVertex2f(x+oglX,y);
@@ -163,7 +163,7 @@ begin
  if isHoriz=False then glVertex2f(x+oglX,y) else glVertex2f(x,y+oglY);
 end;
 
-// Отрисовка знака (цифры, буквы, знака препинания) по сегментам
+// РћС‚СЂРёСЃРѕРІРєР° Р·РЅР°РєР° (С†РёС„СЂС‹, Р±СѓРєРІС‹, Р·РЅР°РєР° РїСЂРµРїРёРЅР°РЅРёСЏ) РїРѕ СЃРµРіРјРµРЅС‚Р°Рј
 procedure TglGraphics.NumDraw(vPanel:TPanel; offset,number:real; axis:string; seg_size,shft_l,shft_b,Xpres,Ypres:integer);
 var
  chr:string;
@@ -171,20 +171,20 @@ var
  k1,k2: real;
  state:boolean;
 begin
- // подписываем вертикальную или горизонтальную оси
+ // РїРѕРґРїРёСЃС‹РІР°РµРј РІРµСЂС‚РёРєР°Р»СЊРЅСѓСЋ РёР»Рё РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅСѓСЋ РѕСЃРё
  if axis='y' then state:=false else if axis='x' then state:=true;
- // округление до двух значащих знаков после запятой
- // и перевод значения в строку
+ // РѕРєСЂСѓРіР»РµРЅРёРµ РґРѕ РґРІСѓС… Р·РЅР°С‡Р°С‰РёС… Р·РЅР°РєРѕРІ РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№
+ // Рё РїРµСЂРµРІРѕРґ Р·РЅР°С‡РµРЅРёСЏ РІ СЃС‚СЂРѕРєСѓ
  if axis='x' then
  chr:=FloatToStrF(number, ffFixed, length(inttostr(Trunc(number)))+Xpres, Xpres)
  else if axis='y' then
  chr:=FloatToStrF(number, ffFixed, length(inttostr(Trunc(number)))+Ypres, Ypres);
 
- for i:=1 to Length(chr) do    // отрисовываем необходимое число по каждому знаку
+ for i:=1 to Length(chr) do    // РѕС‚СЂРёСЃРѕРІС‹РІР°РµРј РЅРµРѕР±С…РѕРґРёРјРѕРµ С‡РёСЃР»Рѕ РїРѕ РєР°Р¶РґРѕРјСѓ Р·РЅР°РєСѓ
  begin
-  glLineWidth(1);                  // толщина сегмента - 1 px
-  glBegin(GL_LINE_STRIP);          // рисуем сегментами отрезками, на каждый требуется 2 точки
-  // определяем начальную точку отсчёта отрисовки знака
+  glLineWidth(1);                  // С‚РѕР»С‰РёРЅР° СЃРµРіРјРµРЅС‚Р° - 1 px
+  glBegin(GL_LINE_STRIP);          // СЂРёСЃСѓРµРј СЃРµРіРјРµРЅС‚Р°РјРё РѕС‚СЂРµР·РєР°РјРё, РЅР° РєР°Р¶РґС‹Р№ С‚СЂРµР±СѓРµС‚СЃСЏ 2 С‚РѕС‡РєРё
+  // РѕРїСЂРµРґРµР»СЏРµРј РЅР°С‡Р°Р»СЊРЅСѓСЋ С‚РѕС‡РєСѓ РѕС‚СЃС‡С‘С‚Р° РѕС‚СЂРёСЃРѕРІРєРё Р·РЅР°РєР°
   if axis='y' then
   begin
    k1:=-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width)-glGraphics1.PxToOgl(5*i+(seg_size*(i)),vPanel.Width);  // 5px
@@ -233,34 +233,34 @@ var
  i, rangeX, rangeY, lenX, lenY,z,shft_l,shft_b:integer;
  amp_min, amp_max: real;
 begin
- rangeX:=Xmax-Xmin;          // Диапазон шагов заполнения осей X и Y
+ rangeX:=Xmax-Xmin;          // Р”РёР°РїР°Р·РѕРЅ С€Р°РіРѕРІ Р·Р°РїРѕР»РЅРµРЅРёСЏ РѕСЃРµР№ X Рё Y
  rangeY:=Ymax-Ymin;          //
  lenX:=vPanel.Width;         //
  lenY:=vPanel.Height;        //
- // Ниже смещение от крайней левой и нижней границы компонента Panel для рисования шкалы
+ // РќРёР¶Рµ СЃРјРµС‰РµРЅРёРµ РѕС‚ РєСЂР°Р№РЅРµР№ Р»РµРІРѕР№ Рё РЅРёР¶РЅРµР№ РіСЂР°РЅРёС†С‹ РєРѕРјРїРѕРЅРµРЅС‚Р° Panel РґР»СЏ СЂРёСЃРѕРІР°РЅРёСЏ С€РєР°Р»С‹
  shft_l:=((length(floattostr(SimpleRoundTo(Ymax*Ystep,-Ypres)))+(Ypres+7))*Seg_Size)+5*(length(floattostr(Ymax*Ystep))+(Ypres+1));
  shft_b:=((length(floattostr(SimpleRoundTo(Xmax*Xstep,-Xpres)))+(Xpres+4))*Seg_Size)+5*(length(floattostr(Xmax*Xstep))+(Xpres+1));
 
  glColor3f(0.0, 0.0, 0.0);                                                 //
  glBegin(GL_LINE_STRIP);                                                   //
- glVertex2f(-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width), -1.0);          //    линия оси Y
+ glVertex2f(-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width), -1.0);          //    Р»РёРЅРёСЏ РѕСЃРё Y
  glVertex2f(-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width), 1.0);           //
  glEnd;                                                                    //
 
  glColor3f(0.0, 0.0, 0.0);                                                //
  glBegin(GL_LINE_STRIP);                                                   //
- glVertex2f(-1.0, -1.0+glGraphics1.PxToOgl(shft_b,vPanel.Height));         //    линия оси X
+ glVertex2f(-1.0, -1.0+glGraphics1.PxToOgl(shft_b,vPanel.Height));         //    Р»РёРЅРёСЏ РѕСЃРё X
  glVertex2f(1.0, -1.0+glGraphics1.PxToOgl(shft_b,vPanel.Height));          //
  glEnd;                                                                    //
 
- if defcoeff(rangeX)>4*Seg_size*glGraphics1.PxToOgl(Seg_size,lenX) then    // вывод на экран всего диапазона значений величины с интервалом в шаг
+ if defcoeff(rangeX)>4*Seg_size*glGraphics1.PxToOgl(Seg_size,lenX) then    // РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ РІСЃРµРіРѕ РґРёР°РїР°Р·РѕРЅР° Р·РЅР°С‡РµРЅРёР№ РІРµР»РёС‡РёРЅС‹ СЃ РёРЅС‚РµСЂРІР°Р»РѕРј РІ С€Р°Рі
  begin
   for I := 1 to rangeX-1 do
   begin
-   // отображение числа
+   // РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ С‡РёСЃР»Р°
    NumDraw(vPanel, i*defcoeff(rangeX, 1.0, -1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width)), SimpleRoundTo(Xmin+i*Xstep,-Xpres), 'x', Seg_size, shft_l, shft_b, Xpres, Ypres);
-   // отображение сетки по данной оси
-   if X_on=True then                                                        // Обрабатываем ось х
+   // РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃРµС‚РєРё РїРѕ РґР°РЅРЅРѕР№ РѕСЃРё
+   if X_on=True then                                                        // РћР±СЂР°Р±Р°С‚С‹РІР°РµРј РѕСЃСЊ С…
    begin
     glColor3f(0.8, 0.8, 0.8);
     glLineWidth(1);
@@ -271,7 +271,7 @@ begin
    end;
   end
  end
- else                                                                      // прореживание значений для отображения, так как будет происходит наложение чисел
+ else                                                                      // РїСЂРѕСЂРµР¶РёРІР°РЅРёРµ Р·РЅР°С‡РµРЅРёР№ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ, С‚Р°Рє РєР°Рє Р±СѓРґРµС‚ РїСЂРѕРёСЃС…РѕРґРёС‚ РЅР°Р»РѕР¶РµРЅРёРµ С‡РёСЃРµР»
  begin
   z:=Ceil(rangeX/(vPanel.Width div (Seg_size*16)));           //
   for i:=1 to (rangeX div z) do
@@ -279,7 +279,7 @@ begin
 
   for I := 1 to (rangeX div z) do
   begin
-   if X_on=True then                                             // Обрабатываем ось х
+   if X_on=True then                                             // РћР±СЂР°Р±Р°С‚С‹РІР°РµРј РѕСЃСЊ С…
    begin
     glColor3f(0.8, 0.8, 0.8);
     glLineWidth(1);
@@ -290,8 +290,8 @@ begin
    end;
   end;
  end;
- // то же для оси Y
- if defcoeff(rangeY)>4*Seg_size*glGraphics1.PxToOgl(Seg_size,lenY) then     // показывать каждую частоту
+ // С‚Рѕ Р¶Рµ РґР»СЏ РѕСЃРё Y
+ if defcoeff(rangeY)>4*Seg_size*glGraphics1.PxToOgl(Seg_size,lenY) then     // РїРѕРєР°Р·С‹РІР°С‚СЊ РєР°Р¶РґСѓСЋ С‡Р°СЃС‚РѕС‚Сѓ
  begin
   for I := 1 to rangeY-1 do
   begin
@@ -324,22 +324,22 @@ begin
   end;
  end;
 
- if mode=-1 then         // не рисуем график, только оси
- else if mode=0 then     // Построение спектрограммы
+ if mode=-1 then         // РЅРµ СЂРёСЃСѓРµРј РіСЂР°С„РёРє, С‚РѕР»СЊРєРѕ РѕСЃРё
+ else if mode=0 then     // РџРѕСЃС‚СЂРѕРµРЅРёРµ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹
   glDrawFFT(vPanel, YMax, YMin, shft_l, shft_b, rangeX)
- else if mode=1 then     // вывод сигналограммы целиком для окна отображения спектрограммы
+ else if mode=1 then     // РІС‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ С†РµР»РёРєРѕРј РґР»СЏ РѕРєРЅР° РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹
   glDraw(0,0,1,0,glgraphics1.tbpos,vPanel,shft_l, shft_b)
- else if mode=2 then     // Вывод сигналограммы исходного сигнала
+ else if mode=2 then     // Р’С‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ РёСЃС…РѕРґРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
   glDraw(0,0,1,start_i,Unit1.Form1.TrackBar5.Position,vPanel,shft_l, shft_b)
- else if mode=3 then     // Вывод сигналограммы гармонического сигнала
+ else if mode=3 then     // Р’С‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ РіР°СЂРјРѕРЅРёС‡РµСЃРєРѕРіРѕ СЃРёРіРЅР°Р»Р°
   glDraw(0,0,2,start_i,Unit1.Form1.TrackBar5.Position,vPanel,shft_l, shft_b)
- else if (mode=4) then   // Вывод сигналограммы результата свертки
+ else if (mode=4) then   // Р’С‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ СЂРµР·СѓР»СЊС‚Р°С‚Р° СЃРІРµСЂС‚РєРё
   glDraw(0,0,3,start_i,Unit1.Form1.TrackBar5.Position,vPanel,shft_l, shft_b)
- else if (mode=5) then   // Вывод сигналограммы прямоугольного импульса
+ else if (mode=5) then   // Р’С‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРіРѕ РёРјРїСѓР»СЊСЃР°
   glDraw(0,0,4,start_i,Unit1.Form1.TrackBar5.Position,vPanel,shft_l, shft_b)
- else if (mode=6) then   // Вывод сигналограммы функции sin(x)/x
+ else if (mode=6) then   // Р’С‹РІРѕРґ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ С„СѓРЅРєС†РёРё sin(x)/x
   glDraw(0,0,5,start_i,Unit1.Form1.TrackBar5.Position,vPanel,shft_l, shft_b)
- else if (mode=7) then   // Вывод спектрограммы
+ else if (mode=7) then   // Р’С‹РІРѕРґ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹
   glDrawFFT_Full(vPanel, start_i, trunc(Xmax), Ymax, shft_l, shft_b)
 end;
 
@@ -353,8 +353,8 @@ begin
 
  for i := 0 to N-1 do
  begin
-  if amp_max<CmxArrAmp[i] then amp_max:=Ceil(CmxArrAmp[i]);                   // находим максимальные и минимальные значения
-  if amp_min>CmxArrAmp[i] then amp_min:=Trunc(CmxArrAmp[i]);                  // амплитуды
+  if amp_max<CmxArrAmp[i] then amp_max:=Ceil(CmxArrAmp[i]);                   // РЅР°С…РѕРґРёРј РјР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Рё РјРёРЅРёРјР°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
+  if amp_min>CmxArrAmp[i] then amp_min:=Trunc(CmxArrAmp[i]);                  // Р°РјРїР»РёС‚СѓРґС‹
  end;
 
  for i := 0 to N-1 do
@@ -370,7 +370,7 @@ begin
  end;
 end;
 
-// Процедура отрисовки графика спектра
+// РџСЂРѕС†РµРґСѓСЂР° РѕС‚СЂРёСЃРѕРІРєРё РіСЂР°С„РёРєР° СЃРїРµРєС‚СЂР°
 procedure TglGraphics.glDrawFFT(vPanel:TPanel; AmpMax, AmpMin, shft_l, shft_b, FreqRange: integer);
 var
  i:integer;
@@ -378,7 +378,7 @@ var
 begin
  shft_l_ogl:=glGraphics1.PxToOgl(shft_l,vPanel.Width);
  shft_b_ogl:=glGraphics1.PxToOgl(shft_b,vPanel.Height);
-  for i:=1 to FreqRange-1 do                // не рисовать 0-ую частоту, т.к. это просто сумма амплитуд
+  for i:=1 to FreqRange-1 do                // РЅРµ СЂРёСЃРѕРІР°С‚СЊ 0-СѓСЋ С‡Р°СЃС‚РѕС‚Сѓ, С‚.Рє. СЌС‚Рѕ РїСЂРѕСЃС‚Рѕ СЃСѓРјРјР° Р°РјРїР»РёС‚СѓРґ
  begin
   glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_LINE_STRIP);
@@ -401,10 +401,10 @@ begin
  ReadWaveHeader;
  if DataValid then
  begin
-  // заполняем буфер
+  // Р·Р°РїРѕР»РЅСЏРµРј Р±СѓС„РµСЂ
   SetLength(buf, nBuffer);
-  nBitsPerSample :=waveDesc.BpS;                                  // количество битов на отсчет
-  nBytesPerSample :=nBitsPerSample Div 8;                         // количество байтов на отсчет
+  nBitsPerSample :=waveDesc.BpS;                                  // РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚РѕРІ РЅР° РѕС‚СЃС‡РµС‚
+  nBytesPerSample :=nBitsPerSample Div 8;                         // РєРѕР»РёС‡РµСЃС‚РІРѕ Р±Р°Р№С‚РѕРІ РЅР° РѕС‚СЃС‡РµС‚
   nSamples := waveDesc.sch2S div waveDesc.BA;
   maxScale:=nSamples/3;
   SetLength(Unit1.TempBuf, NSamples-1);
@@ -487,16 +487,16 @@ begin
 end;
 
 procedure TglGraphics.ReadSamples (startReadIndex :Integer; nReadSamples :Integer; startIBuf :Integer);
-// startReadIndex -- начальная позиция для чтения в файле без учета смещения. т.е. нужно добавлять dataOffset
-// nReadSamples   --  кол-во считываемых сэмплов
-// startIBuf      --  начальный индекс в буфере с которого начинаем его заполнение
+// startReadIndex -- РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ РґР»СЏ С‡С‚РµРЅРёСЏ РІ С„Р°Р№Р»Рµ Р±РµР· СѓС‡РµС‚Р° СЃРјРµС‰РµРЅРёСЏ. С‚.Рµ. РЅСѓР¶РЅРѕ РґРѕР±Р°РІР»СЏС‚СЊ dataOffset
+// nReadSamples   --  РєРѕР»-РІРѕ СЃС‡РёС‚С‹РІР°РµРјС‹С… СЃСЌРјРїР»РѕРІ
+// startIBuf      --  РЅР°С‡Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ РІ Р±СѓС„РµСЂРµ СЃ РєРѕС‚РѕСЂРѕРіРѕ РЅР°С‡РёРЅР°РµРј РµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёРµ
 var
- howBuf :Integer;    // кол-во сэмплов в буфере, которые можно заполнить
- howFile :Integer;   // кол-во сэмплов в файле, которые можно считать с позиции startReadIndex
+ howBuf :Integer;    // РєРѕР»-РІРѕ СЃСЌРјРїР»РѕРІ РІ Р±СѓС„РµСЂРµ, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ Р·Р°РїРѕР»РЅРёС‚СЊ
+ howFile :Integer;   // РєРѕР»-РІРѕ СЃСЌРјРїР»РѕРІ РІ С„Р°Р№Р»Рµ, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ СЃС‡РёС‚Р°С‚СЊ СЃ РїРѕР·РёС†РёРё startReadIndex
 begin
- // определяем сколько можно считать и записать в массив без наложения и выхода за границу файла
- if startIBuf+nReadSamples-1<=Length(buf)-1 then howBuf :=nReadSamples else howBuf :=Length(buf)-startIBuf; // определяем количество сэмплов что можно записать в буфере
- if startReadIndex+nReadSamples-1<=nSamples-1 then howFile :=nReadSamples else howFile :=nSamples-startReadIndex; // определяем количество сэмплов что можно считать из файла
+ // РѕРїСЂРµРґРµР»СЏРµРј СЃРєРѕР»СЊРєРѕ РјРѕР¶РЅРѕ СЃС‡РёС‚Р°С‚СЊ Рё Р·Р°РїРёСЃР°С‚СЊ РІ РјР°СЃСЃРёРІ Р±РµР· РЅР°Р»РѕР¶РµРЅРёСЏ Рё РІС‹С…РѕРґР° Р·Р° РіСЂР°РЅРёС†Сѓ С„Р°Р№Р»Р°
+ if startIBuf+nReadSamples-1<=Length(buf)-1 then howBuf :=nReadSamples else howBuf :=Length(buf)-startIBuf; // РѕРїСЂРµРґРµР»СЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЌРјРїР»РѕРІ С‡С‚Рѕ РјРѕР¶РЅРѕ Р·Р°РїРёСЃР°С‚СЊ РІ Р±СѓС„РµСЂРµ
+ if startReadIndex+nReadSamples-1<=nSamples-1 then howFile :=nReadSamples else howFile :=nSamples-startReadIndex; // РѕРїСЂРµРґРµР»СЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЌРјРїР»РѕРІ С‡С‚Рѕ РјРѕР¶РЅРѕ СЃС‡РёС‚Р°С‚СЊ РёР· С„Р°Р№Р»Р°
  if howBuf>howFile then howBuf := howFile;
 
  f.Seek((dataOffset+startReadIndex), soFromBeginning);
@@ -509,26 +509,26 @@ var
  swpoint,pmax,pmin,offst_lt,offst_bm:real;
  check:boolean;
 begin
- offst_lt:=-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width);     // Смещение слева по оси X для корректного отображения шкалы
- offst_bm:=-1.0+glGraphics1.PxToOgl(shft_b,vPanel.Height);    // Смещение снизу по Y
- npoints:=trunc(pps/vPanel.width);              // Сколько отсчётов помещаются в 1 пикселе
+ offst_lt:=-1.0+glGraphics1.PxToOgl(shft_l,vPanel.Width);     // РЎРјРµС‰РµРЅРёРµ СЃР»РµРІР° РїРѕ РѕСЃРё X РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕРіРѕ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С€РєР°Р»С‹
+ offst_bm:=-1.0+glGraphics1.PxToOgl(shft_b,vPanel.Height);    // РЎРјРµС‰РµРЅРёРµ СЃРЅРёР·Сѓ РїРѕ Y
+ npoints:=trunc(pps/vPanel.width);              // РЎРєРѕР»СЊРєРѕ РѕС‚СЃС‡С‘С‚РѕРІ РїРѕРјРµС‰Р°СЋС‚СЃСЏ РІ 1 РїРёРєСЃРµР»Рµ
 
- if npoints<1 then         // Рисование ломаной линией всех отсчётов, так как не присходит
- begin                                           // их наложения из-за большого масштаба
+ if npoints<1 then         // Р РёСЃРѕРІР°РЅРёРµ Р»РѕРјР°РЅРѕР№ Р»РёРЅРёРµР№ РІСЃРµС… РѕС‚СЃС‡С‘С‚РѕРІ, С‚Р°Рє РєР°Рє РЅРµ РїСЂРёСЃС…РѕРґРёС‚
+ begin                                           // РёС… РЅР°Р»РѕР¶РµРЅРёСЏ РёР·-Р·Р° Р±РѕР»СЊС€РѕРіРѕ РјР°СЃС€С‚Р°Р±Р°
   glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_LINE_STRIP);
-  for i:=0 to pps-1 do                           // определение i-ой точки для построения графика
+  for i:=0 to pps-1 do                           // РѕРїСЂРµРґРµР»РµРЅРёРµ i-РѕР№ С‚РѕС‡РєРё РґР»СЏ РїРѕСЃС‚СЂРѕРµРЅРёСЏ РіСЂР°С„РёРєР°
   begin
-   if (state=1) then                             // если переменная состояния равна 1
-    SWpoint:=SampleI[startindex+i]               // строим сигналограмму и считываем отсчёты из файла
+   if (state=1) then                             // РµСЃР»Рё РїРµСЂРµРјРµРЅРЅР°СЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЂР°РІРЅР° 1
+    SWpoint:=SampleI[startindex+i]               // СЃС‚СЂРѕРёРј СЃРёРіРЅР°Р»РѕРіСЂР°РјРјСѓ Рё СЃС‡РёС‚С‹РІР°РµРј РѕС‚СЃС‡С‘С‚С‹ РёР· С„Р°Р№Р»Р°
    else if state=2 then
-    SWpoint := sinWX (A, B, lambda, startindex+i, fz)  // строим синусоиду, генерируем отсчёты функцией
+    SWpoint := sinWX (A, B, lambda, startindex+i, fz)  // СЃС‚СЂРѕРёРј СЃРёРЅСѓСЃРѕРёРґСѓ, РіРµРЅРµСЂРёСЂСѓРµРј РѕС‚СЃС‡С‘С‚С‹ С„СѓРЅРєС†РёРµР№
    else if state=3 then
-    SWpoint := Unit1.Conv_res2[startindex+i]              // строим результат свёртки
+    SWpoint := Unit1.Conv_res2[startindex+i]              // СЃС‚СЂРѕРёРј СЂРµР·СѓР»СЊС‚Р°С‚ СЃРІС‘СЂС‚РєРё
    else if state=4 then
-    SWpoint:=RectPulse(lambda, fz, startindex+i)*127  // строим прямоугольный импульс
+    SWpoint:=RectPulse(lambda, fz, startindex+i)*127  // СЃС‚СЂРѕРёРј РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Р№ РёРјРїСѓР»СЊСЃ
    else if state=5 then
-    SWpoint:=sinc(lambda, startindex+i, strtoint(unit1.Form1.Edit1.Text))*127  // строим функцию sin(x)/x
+    SWpoint:=sinc(lambda, startindex+i, strtoint(unit1.Form1.Edit1.Text))*127  // СЃС‚СЂРѕРёРј С„СѓРЅРєС†РёСЋ sin(x)/x
    else
     break;
 
@@ -536,9 +536,9 @@ begin
   end;
   glEnd;
  end
- else if npoints>=1 then                          // применение алгоритма прореживания отсчётов, при котором
- begin                                            // находятся максимальные и минимальные отсчёты из
-  for i:=0 to vPanel.width-1 do                   // npoints отсчётов и рисуется прямая линия их соединяющая
+ else if npoints>=1 then                          // РїСЂРёРјРµРЅРµРЅРёРµ Р°Р»РіРѕСЂРёС‚РјР° РїСЂРѕСЂРµР¶РёРІР°РЅРёСЏ РѕС‚СЃС‡С‘С‚РѕРІ, РїСЂРё РєРѕС‚РѕСЂРѕРј
+ begin                                            // РЅР°С…РѕРґСЏС‚СЃСЏ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рµ Рё РјРёРЅРёРјР°Р»СЊРЅС‹Рµ РѕС‚СЃС‡С‘С‚С‹ РёР·
+  for i:=0 to vPanel.width-1 do                   // npoints РѕС‚СЃС‡С‘С‚РѕРІ Рё СЂРёСЃСѓРµС‚СЃСЏ РїСЂСЏРјР°СЏ Р»РёРЅРёСЏ РёС… СЃРѕРµРґРёРЅСЏСЋС‰Р°СЏ
   begin
    check:=false;
    pmin:=255;
@@ -559,15 +559,15 @@ begin
     if (j>sel_start) and (j<sel_end) then check:=true;
    end;
 
-    if (check=true)  then                                            // выделение фона участка сигналограммы
-    begin                                                             // в окне построения спектрограммы
+    if (check=true)  then                                            // РІС‹РґРµР»РµРЅРёРµ С„РѕРЅР° СѓС‡Р°СЃС‚РєР° СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹
+    begin                                                             // РІ РѕРєРЅРµ РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹
      glColor3f(0.0, 0.0, 0.0);
      glBegin(GL_LINE_STRIP);
      glVertex2f((offst_lt+(i*defcoeff(vPanel.width, 1.0, offst_lt))),-1.0);
      glVertex2f((offst_lt+(i*defcoeff(vPanel.width, 1.0, offst_lt))),1.0);
      glEnd;
     end;
-    // если i-ый отсчёт находится в выделяемом участке, рисовать сигналограмму другим цветом
+    // РµСЃР»Рё i-С‹Р№ РѕС‚СЃС‡С‘С‚ РЅР°С…РѕРґРёС‚СЃСЏ РІ РІС‹РґРµР»СЏРµРјРѕРј СѓС‡Р°СЃС‚РєРµ, СЂРёСЃРѕРІР°С‚СЊ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјСѓ РґСЂСѓРіРёРј С†РІРµС‚РѕРј
     if (check=true)  then  glColor3f(1.0, 1.0, 1.0) else glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_STRIP);
     glVertex2f((offst_lt+(i*defcoeff(vPanel.width, 1.0, offst_lt))),(offst_bm+(pmin*defcoeff(256, 1.0, offst_bm))));
@@ -577,12 +577,12 @@ begin
   end;
  end;
 
- if (tbpos<=tbselstart) then    // Дублирование сигналограммы точками при малом масщтабе
+ if (tbpos<=tbselstart) then    // Р”СѓР±Р»РёСЂРѕРІР°РЅРёРµ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ С‚РѕС‡РєР°РјРё РїСЂРё РјР°Р»РѕРј РјР°СЃС‰С‚Р°Р±Рµ
  begin
-  glColor3f(0.5, 0.5, 0.5);     // Цвет
-  glpointsize(5);               // Размер точки
-  glBegin(GL_POINTS);           // Сообщаем, что рисуем точками
-  for i:=0 to pps do            // Количество отображаемых точек (масштаб в pps)
+  glColor3f(0.5, 0.5, 0.5);     // Р¦РІРµС‚
+  glpointsize(5);               // Р Р°Р·РјРµСЂ С‚РѕС‡РєРё
+  glBegin(GL_POINTS);           // РЎРѕРѕР±С‰Р°РµРј, С‡С‚Рѕ СЂРёСЃСѓРµРј С‚РѕС‡РєР°РјРё
+  for i:=0 to pps do            // РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… С‚РѕС‡РµРє (РјР°СЃС€С‚Р°Р± РІ pps)
   begin
    if (state=1) then SWpoint:=SampleI[startindex+i]
    else if state=2 then SWpoint:=sinWX (A, B, lambda, startindex+i, fz)
@@ -599,15 +599,15 @@ end;
 function TglGraphics.GetSampleI (index:Integer) :Integer;
 begin
  if (index<0) Or (index>nSamples-1) then Result :=0
- else // если индекс внутри файла
+ else // РµСЃР»Рё РёРЅРґРµРєСЃ РІРЅСѓС‚СЂРё С„Р°Р№Р»Р°
  begin
-  // startI                -- нач. поз.
-  // startI+Length(buf)-1  -- кон. поз.
-  if (index>=startI) And (index<=startI+Length(buf)-1) then // если индекс внутри буфера
+  // startI                -- РЅР°С‡. РїРѕР·.
+  // startI+Length(buf)-1  -- РєРѕРЅ. РїРѕР·.
+  if (index>=startI) And (index<=startI+Length(buf)-1) then // РµСЃР»Рё РёРЅРґРµРєСЃ РІРЅСѓС‚СЂРё Р±СѓС„РµСЂР°
    Result :=buf[index-startI]
   else
   begin
-   // в буфере нет нужных данных
+   // РІ Р±СѓС„РµСЂРµ РЅРµС‚ РЅСѓР¶РЅС‹С… РґР°РЅРЅС‹С…
    startI :=index;
    ReadSamples(index,Length(buf),0);
    Result :=buf[0];

@@ -58,10 +58,10 @@ type
   end;
 
   const
-  glLB=-1.0;                            // Левая
-  glRB=1.0;                             // Правая
-  glTB=1.0;                             // Верхняя
-  glBB=-1.0;                            // и нижняя граница окна в координатах OpenGL
+  glLB=-1.0;                            // Р›РµРІР°СЏ
+  glRB=1.0;                             // РџСЂР°РІР°СЏ
+  glTB=1.0;                             // Р’РµСЂС…РЅСЏСЏ
+  glBB=-1.0;                            // Рё РЅРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р° РѕРєРЅР° РІ РєРѕРѕСЂРґРёРЅР°С‚Р°С… OpenGL
 
 var
   Spectrum1: TSpectrum1;
@@ -72,7 +72,7 @@ implementation
 
 {$R *.dfm}
 
-// Устанавливаем PixelFormat
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј PixelFormat
 procedure TSpectrum1.SetDCPixelFormat (hdc : HDC);
 var
  pfd : TPixelFormatDescriptor;
@@ -84,50 +84,50 @@ begin
  SetPixelFormat (hdc, nPixelFormat, @pfd);
 end;
 
-// Функция выбора сглаживающего окна
-// Здесь: mode - тип окна, i - порядковый номер i-го отсчёта сигнала, размер окна в отсчётах
+// Р¤СѓРЅРєС†РёСЏ РІС‹Р±РѕСЂР° СЃРіР»Р°Р¶РёРІР°СЋС‰РµРіРѕ РѕРєРЅР°
+// Р—РґРµСЃСЊ: mode - С‚РёРї РѕРєРЅР°, i - РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ i-РіРѕ РѕС‚СЃС‡С‘С‚Р° СЃРёРіРЅР°Р»Р°, СЂР°Р·РјРµСЂ РѕРєРЅР° РІ РѕС‚СЃС‡С‘С‚Р°С…
 function Window_type(mode, i, N: integer): double;
 begin
- if mode=0 then                       // Прямоугольное окно
+ if mode=0 then                       // РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕРµ РѕРєРЅРѕ
   Result:=1
- else if mode=1 then                  // Хэннинга
+ else if mode=1 then                  // РҐСЌРЅРЅРёРЅРіР°
   Result:=0.5*(1-cos((2*pi*i)/(N-1)))
- else if mode=2 then                  // Хэмминга
+ else if mode=2 then                  // РҐСЌРјРјРёРЅРіР°
   Result:=0.53836-0.46164*cos(2*pi*i/(N-1))
  else if mode=3 then                  // Welch
   Result:=1-sqr((i-(N-1)/2)/((N-1)/2))
- else if mode=4 then                  // Синусное окно
+ else if mode=4 then                  // РЎРёРЅСѓСЃРЅРѕРµ РѕРєРЅРѕ
   Result:=sin(pi*i/(N-1));
 end;
 
-// Процедура перемещения ползунка для изменения положения выделяемого участка
-// аудиофайла для последующего построения спектра данного участка
+// РџСЂРѕС†РµРґСѓСЂР° РїРµСЂРµРјРµС‰РµРЅРёСЏ РїРѕР»Р·СѓРЅРєР° РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ РІС‹РґРµР»СЏРµРјРѕРіРѕ СѓС‡Р°СЃС‚РєР°
+// Р°СѓРґРёРѕС„Р°Р№Р»Р° РґР»СЏ РїРѕСЃР»РµРґСѓСЋС‰РµРіРѕ РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРїРµРєС‚СЂР° РґР°РЅРЅРѕРіРѕ СѓС‡Р°СЃС‚РєР°
 procedure TSpectrum1.TrackBar1Change(Sender: TObject);
 var
  i,N,nSamples:integer;
 begin
- N:=strtoint(Combobox1.Text);                  // Размер окна
- nSamples:=glGraphics1.nSamples;               // Количество отсчётов
- if (TrackBar1.Position+N)<nSamples then       // Если перемещение происходит в пределах файла,
- begin                                         // производить только выделение участка
-  Trackbar1.SelStart:=TrackBar1.Position;      // на полосе прокрутки
+ N:=strtoint(Combobox1.Text);                  // Р Р°Р·РјРµСЂ РѕРєРЅР°
+ nSamples:=glGraphics1.nSamples;               // РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЃС‡С‘С‚РѕРІ
+ if (TrackBar1.Position+N)<nSamples then       // Р•СЃР»Рё РїРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРѕРёСЃС…РѕРґРёС‚ РІ РїСЂРµРґРµР»Р°С… С„Р°Р№Р»Р°,
+ begin                                         // РїСЂРѕРёР·РІРѕРґРёС‚СЊ С‚РѕР»СЊРєРѕ РІС‹РґРµР»РµРЅРёРµ СѓС‡Р°СЃС‚РєР°
+  Trackbar1.SelStart:=TrackBar1.Position;      // РЅР° РїРѕР»РѕСЃРµ РїСЂРѕРєСЂСѓС‚РєРё
   TrackBar1.SelEnd:=TrackBar1.Position+N;
  end
- else                                          // если конец выделяемого участка выходит за пределы файла
- begin                                         // задать разрешённый максимум прокрутки
+ else                                          // РµСЃР»Рё РєРѕРЅРµС† РІС‹РґРµР»СЏРµРјРѕРіРѕ СѓС‡Р°СЃС‚РєР° РІС‹С…РѕРґРёС‚ Р·Р° РїСЂРµРґРµР»С‹ С„Р°Р№Р»Р°
+ begin                                         // Р·Р°РґР°С‚СЊ СЂР°Р·СЂРµС€С‘РЅРЅС‹Р№ РјР°РєСЃРёРјСѓРј РїСЂРѕРєСЂСѓС‚РєРё
   TrackBar1.Position:=nSamples-N;
   Trackbar1.SelStart:=TrackBar1.Position;
   TrackBar1.SelEnd:=nSamples;
  end;
 
- for I := 0 to (N-1) do      // копируем отсчёты в комплексный массив
+ for I := 0 to (N-1) do      // РєРѕРїРёСЂСѓРµРј РѕС‚СЃС‡С‘С‚С‹ РІ РєРѕРјРїР»РµРєСЃРЅС‹Р№ РјР°СЃСЃРёРІ
   TCmxArr[i]:=VarComplexCreate(TempBuf[TrackBar1.SelStart+i],0);
 
- FFT(TCmxArr, N, N,false);  // выполнить БПФ
- showFFT(Panel1,dc,hrc,N);  // и вывести на полотно
+ FFT(TCmxArr, N, N,false);  // РІС‹РїРѕР»РЅРёС‚СЊ Р‘РџР¤
+ showFFT(Panel1,dc,hrc,N);  // Рё РІС‹РІРµСЃС‚Рё РЅР° РїРѕР»РѕС‚РЅРѕ
 
- // Код ниже отвечает за вывод всей сигналограммы с выделяемым участком исследования
- // на верхней панели
+ // РљРѕРґ РЅРёР¶Рµ РѕС‚РІРµС‡Р°РµС‚ Р·Р° РІС‹РІРѕРґ РІСЃРµР№ СЃРёРіРЅР°Р»РѕРіСЂР°РјРјС‹ СЃ РІС‹РґРµР»СЏРµРјС‹Рј СѓС‡Р°СЃС‚РєРѕРј РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ
+ // РЅР° РІРµСЂС…РЅРµР№ РїР°РЅРµР»Рё
  wglMakeCurrent(dc2,hrc2);
  glViewPort(0, 0, Panel2.Width, Panel2.Height);
  glClearColor(1.0, 1.0 ,1.0 ,0.0);
@@ -138,7 +138,7 @@ begin
 end;
 
 
-procedure TSpectrum1.Button1Click(Sender: TObject);      // Построение спектрограммы, используя ДПФ
+procedure TSpectrum1.Button1Click(Sender: TObject);      // РџРѕСЃС‚СЂРѕРµРЅРёРµ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹, РёСЃРїРѕР»СЊР·СѓСЏ Р”РџР¤
 var
  i,N:integer;
 begin
@@ -147,28 +147,28 @@ begin
  showFFT(Panel1,dc,hrc,N);
 end;
 
-// перестановка элементов для БПФ
+// РїРµСЂРµСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚РѕРІ РґР»СЏ Р‘РџР¤
 procedure Rearrange(N, StartI:integer; var Smpls: Variant);
 var
  i:integer;
  x:variant;
 begin
- x:=VarArrayCreate([0, N],  varVariant);       // создание переменного массива
+ x:=VarArrayCreate([0, N],  varVariant);       // СЃРѕР·РґР°РЅРёРµ РїРµСЂРµРјРµРЅРЅРѕРіРѕ РјР°СЃСЃРёРІР°
 
  for i := 0 to N-1 do
  begin
-  x[i]:=Smpls[StartI+(i shl 1)+1]; // копировать все нечётные элементы в переменный массив
+  x[i]:=Smpls[StartI+(i shl 1)+1]; // РєРѕРїРёСЂРѕРІР°С‚СЊ РІСЃРµ РЅРµС‡С‘С‚РЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ РІ РїРµСЂРµРјРµРЅРЅС‹Р№ РјР°СЃСЃРёРІ
  end;
 
  for i:=0 to N-1 do
  begin
-  Smpls[StartI+i]:=Smpls[StartI+(i shl 1)]; // копировать все чётные элементы в первую половину массива
+  Smpls[StartI+i]:=Smpls[StartI+(i shl 1)]; // РєРѕРїРёСЂРѕРІР°С‚СЊ РІСЃРµ С‡С‘С‚РЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ РІ РїРµСЂРІСѓСЋ РїРѕР»РѕРІРёРЅСѓ РјР°СЃСЃРёРІР°
  end;
 
  for i := 0 to N-1 do
  begin
-  Smpls[StartI+(N+1)+i]:=X[I];             // переместить элементы из переменного массива
- end;                                      // во вторую половину комплексного массива отсчётов
+  Smpls[StartI+(N+1)+i]:=X[I];             // РїРµСЂРµРјРµСЃС‚РёС‚СЊ СЌР»РµРјРµРЅС‚С‹ РёР· РїРµСЂРµРјРµРЅРЅРѕРіРѕ РјР°СЃСЃРёРІР°
+ end;                                      // РІРѕ РІС‚РѕСЂСѓСЋ РїРѕР»РѕРІРёРЅСѓ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ РјР°СЃСЃРёРІР° РѕС‚СЃС‡С‘С‚РѕРІ
 end;
 
 procedure TSpectrum1.FFT(var Smpls: Variant; wSize, N: integer; inverse:boolean);
@@ -183,16 +183,16 @@ begin
   begin
   k:=6.28318/N;
   k3:=N shr 1;
-   for j := 0 to (wSize div N)-1 do         // кол-во N-точечных БПФ на данном этапе
+   for j := 0 to (wSize div N)-1 do         // РєРѕР»-РІРѕ N-С‚РѕС‡РµС‡РЅС‹С… Р‘РџР¤ РЅР° РґР°РЅРЅРѕРј СЌС‚Р°РїРµ
    begin
-    for i:=0 to k3-1 do                                 // кол-во операций внутри каждого N-точечного БПФ
+    for i:=0 to k3-1 do                                 // РєРѕР»-РІРѕ РѕРїРµСЂР°С†РёР№ РІРЅСѓС‚СЂРё РєР°Р¶РґРѕРіРѕ N-С‚РѕС‡РµС‡РЅРѕРіРѕ Р‘РџР¤
     begin
      Re:=cos(k*i);
      Im:=-sin(k*i);
      k2:=j*N+i;
      if inverse=false then
       x:=Smpls[k2]+VarComplexCreate(Re,Im)*Smpls[k2+k3]
-     else  // при ОДПФ берётся комплексно сопряжённый коэффициент
+     else  // РїСЂРё РћР”РџР¤ Р±РµСЂС‘С‚СЃСЏ РєРѕРјРїР»РµРєСЃРЅРѕ СЃРѕРїСЂСЏР¶С‘РЅРЅС‹Р№ РєРѕСЌС„С„РёС†РёРµРЅС‚
       x:=Smpls[k2]+VarComplexConjugate(VarComplexCreate(Re,Im))*Smpls[k2+k3];
 
      if inverse=false then
@@ -208,8 +208,8 @@ begin
  end
  else
  begin
-  for i := 0 to (wSize div N)-1 do         // делаем перестановку элементов
-   Rearrange((N shr 1)-1, (i*N), Smpls);                           // пока N не равно 2
+  for i := 0 to (wSize div N)-1 do         // РґРµР»Р°РµРј РїРµСЂРµСЃС‚Р°РЅРѕРІРєСѓ СЌР»РµРјРµРЅС‚РѕРІ
+   Rearrange((N shr 1)-1, (i*N), Smpls);                           // РїРѕРєР° N РЅРµ СЂР°РІРЅРѕ 2
 
   FFT(Smpls, wSize, N shr 1,inverse);
  end;
@@ -221,7 +221,7 @@ var
  Re, Im, coef, dblpi: Double;
 begin
  dblpi:=2*pi;
- TCmxArr:=VarArrayCreate([0, N-1], varVariant); // Создание комплексного массива
+ TCmxArr:=VarArrayCreate([0, N-1], varVariant); // РЎРѕР·РґР°РЅРёРµ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ РјР°СЃСЃРёРІР°
  for k:=0 to N-1 do
  begin
   TCmxArr[k]:=VarComplexCreate(0,0);
@@ -232,64 +232,64 @@ begin
    Im:=-sin(coef*m);
    TCmxArr[k]:=TCmxArr[k]+(VarComplexCreate(Re,Im)*TCmxArr[offset+m]);
   end;
-  if inverse=True then TCmxArr[k]:=TCmxArr[k]/N;   // нормализация при ОДПФ
+  if inverse=True then TCmxArr[k]:=TCmxArr[k]/N;   // РЅРѕСЂРјР°Р»РёР·Р°С†РёСЏ РїСЂРё РћР”РџР¤
  end;
 end;
 
-// Функция операции свёртки: на вход подаётся массив res для записи в
-// него результата, а также 2 комплексных массива с исходным
-// сигналом и массивом ядра свёртки
+// Р¤СѓРЅРєС†РёСЏ РѕРїРµСЂР°С†РёРё СЃРІС‘СЂС‚РєРё: РЅР° РІС…РѕРґ РїРѕРґР°С‘С‚СЃСЏ РјР°СЃСЃРёРІ res РґР»СЏ Р·Р°РїРёСЃРё РІ
+// РЅРµРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р°, Р° С‚Р°РєР¶Рµ 2 РєРѕРјРїР»РµРєСЃРЅС‹С… РјР°СЃСЃРёРІР° СЃ РёСЃС…РѕРґРЅС‹Рј
+// СЃРёРіРЅР°Р»РѕРј Рё РјР°СЃСЃРёРІРѕРј СЏРґСЂР° СЃРІС‘СЂС‚РєРё
 function TSpectrum1.FFT_convolution(var res:Variant; a,b: Variant):variant;
 var
  m,i:integer;
  conv_res:variant;
  expon, real_size, rsize_a, rsize_b:integer;
 begin
- rsize_a:=VarArrayHighBound(a,1)+1;       // определяем длину массива а (верхний индекс элемента + 1)
- rsize_b:=VarArrayHighBound(b,1)+1;       // массива b
- real_size:=rsize_a+rsize_b-1;            // определяем нужную длину массива с результатами
+ rsize_a:=VarArrayHighBound(a,1)+1;       // РѕРїСЂРµРґРµР»СЏРµРј РґР»РёРЅСѓ РјР°СЃСЃРёРІР° Р° (РІРµСЂС…РЅРёР№ РёРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° + 1)
+ rsize_b:=VarArrayHighBound(b,1)+1;       // РјР°СЃСЃРёРІР° b
+ real_size:=rsize_a+rsize_b-1;            // РѕРїСЂРµРґРµР»СЏРµРј РЅСѓР¶РЅСѓСЋ РґР»РёРЅСѓ РјР°СЃСЃРёРІР° СЃ СЂРµР·СѓР»СЊС‚Р°С‚Р°РјРё
 
- repeat                                    // Для применения БПФ алгоритма необходима длина
- begin                                     // входного массива, являющаяся степенью двойки.
-  real_size:=real_size div 2;              // Для этого вычисляем данную степень
+ repeat                                    // Р”Р»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ Р‘РџР¤ Р°Р»РіРѕСЂРёС‚РјР° РЅРµРѕР±С…РѕРґРёРјР° РґР»РёРЅР°
+ begin                                     // РІС…РѕРґРЅРѕРіРѕ РјР°СЃСЃРёРІР°, СЏРІР»СЏСЋС‰Р°СЏСЃСЏ СЃС‚РµРїРµРЅСЊСЋ РґРІРѕР№РєРё.
+  real_size:=real_size div 2;              // Р”Р»СЏ СЌС‚РѕРіРѕ РІС‹С‡РёСЃР»СЏРµРј РґР°РЅРЅСѓСЋ СЃС‚РµРїРµРЅСЊ
   inc(expon);                              //
  end;                                      //
  until real_size<1;                        //
 
- real_size:=trunc(power(2, expon));        // рассчитываем новый размер массива, степень двойки
+ real_size:=trunc(power(2, expon));        // СЂР°СЃСЃС‡РёС‚С‹РІР°РµРј РЅРѕРІС‹Р№ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°, СЃС‚РµРїРµРЅСЊ РґРІРѕР№РєРё
 
- VarArrayRedim(a, real_size);              // расширяем размер до степени двойки
- VarArrayRedim(b, real_size);              // обоих входных массивов
+ VarArrayRedim(a, real_size);              // СЂР°СЃС€РёСЂСЏРµРј СЂР°Р·РјРµСЂ РґРѕ СЃС‚РµРїРµРЅРё РґРІРѕР№РєРё
+ VarArrayRedim(b, real_size);              // РѕР±РѕРёС… РІС…РѕРґРЅС‹С… РјР°СЃСЃРёРІРѕРІ
 
  for i:=rsize_a to real_size-1 do
  begin
-  a[i]:=VarComplexCreate(0,0);             // Заполнение остатка массива a нулевыми отсчётами
+  a[i]:=VarComplexCreate(0,0);             // Р—Р°РїРѕР»РЅРµРЅРёРµ РѕСЃС‚Р°С‚РєР° РјР°СЃСЃРёРІР° a РЅСѓР»РµРІС‹РјРё РѕС‚СЃС‡С‘С‚Р°РјРё
  end;
 
  for i:=rsize_b to real_size-1 do
  begin
-  b[i]:=VarComplexCreate(0,0);             // то же
+  b[i]:=VarComplexCreate(0,0);             // С‚Рѕ Р¶Рµ
  end;
 
  Unit1.Form1.ProgressBar1.Position:=2;
 
- FFT(a, real_size, real_size, false);      // выполняем БПФ для массива с отсчётами
+ FFT(a, real_size, real_size, false);      // РІС‹РїРѕР»РЅСЏРµРј Р‘РџР¤ РґР»СЏ РјР°СЃСЃРёРІР° СЃ РѕС‚СЃС‡С‘С‚Р°РјРё
  Unit1.Form1.ProgressBar1.Position:=4;
  FFT(b, real_size, real_size, false);
- Unit1.Form1.ProgressBar1.Position:=6;     // для массива ядра свёртки
+ Unit1.Form1.ProgressBar1.Position:=6;     // РґР»СЏ РјР°СЃСЃРёРІР° СЏРґСЂР° СЃРІС‘СЂС‚РєРё
 
- VarArrayRedim(res, real_size);            // расширяем массив результата до нужного размера
+ VarArrayRedim(res, real_size);            // СЂР°СЃС€РёСЂСЏРµРј РјР°СЃСЃРёРІ СЂРµР·СѓР»СЊС‚Р°С‚Р° РґРѕ РЅСѓР¶РЅРѕРіРѕ СЂР°Р·РјРµСЂР°
 
- for m:=0 to real_size-1 do                // производим перемножение в частотной области
+ for m:=0 to real_size-1 do                // РїСЂРѕРёР·РІРѕРґРёРј РїРµСЂРµРјРЅРѕР¶РµРЅРёРµ РІ С‡Р°СЃС‚РѕС‚РЅРѕР№ РѕР±Р»Р°СЃС‚Рё
  begin                                     //
   res[m]:=a[m]*b[m];                        //
  end;
 
 
- FFT(res, real_size, real_size, true);     // выполнение ОБПФ для массива результатов
+ FFT(res, real_size, real_size, true);     // РІС‹РїРѕР»РЅРµРЅРёРµ РћР‘РџР¤ РґР»СЏ РјР°СЃСЃРёРІР° СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
  Unit1.Form1.ProgressBar1.Position:=8;
 
- for m:=0 to real_size-1 do                // Производим нормализацию результатов ОБПФ
+ for m:=0 to real_size-1 do                // РџСЂРѕРёР·РІРѕРґРёРј РЅРѕСЂРјР°Р»РёР·Р°С†РёСЋ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РћР‘РџР¤
  begin                                     //
   res[m]:=res[m]/real_size;                 //
  end;                                      //
@@ -339,28 +339,28 @@ begin
  glViewPort(0, 0, vPanel.Width, vPanel.Height);
 
  glClearColor(1.0, 1.0 ,1.0 ,0.0);
- glClear(GL_COLOR_BUFFER_BIT);     // очистка буфера цвета
+ glClear(GL_COLOR_BUFFER_BIT);     // РѕС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° С†РІРµС‚Р°
 
- SR:=strtoint(unit1.Form1.lbl_SR.Caption);        // скорость битового потока
- step:=SR/N;                                       // шаг частот спектра
+ SR:=strtoint(unit1.Form1.lbl_SR.Caption);        // СЃРєРѕСЂРѕСЃС‚СЊ Р±РёС‚РѕРІРѕРіРѕ РїРѕС‚РѕРєР°
+ step:=SR/N;                                       // С€Р°Рі С‡Р°СЃС‚РѕС‚ СЃРїРµРєС‚СЂР°
 
-  if N2.Checked=true then                   // режим построения спектра файла
+  if N2.Checked=true then                   // СЂРµР¶РёРј РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРїРµРєС‚СЂР° С„Р°Р№Р»Р°
   begin
-   for i := 0 to N-1 do    // заполнение массива AmpArr амплитудами частот в dB с приведение к шкале с max значением = 0
+   for i := 0 to N-1 do    // Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° AmpArr Р°РјРїР»РёС‚СѓРґР°РјРё С‡Р°СЃС‚РѕС‚ РІ dB СЃ РїСЂРёРІРµРґРµРЅРёРµ Рє С€РєР°Р»Рµ СЃ max Р·РЅР°С‡РµРЅРёРµРј = 0
    begin
     AmpArr[i]:=20*math.Log10(VarComplexAbs(TCmxArr[i]/N));
-    if amp_max<AmpArr[i] then amp_max:=AmpArr[i];  // нахождение максимальной и минимальной амплитуды частот в dB
+    if amp_max<AmpArr[i] then amp_max:=AmpArr[i];  // РЅР°С…РѕР¶РґРµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ Рё РјРёРЅРёРјР°Р»СЊРЅРѕР№ Р°РјРїР»РёС‚СѓРґС‹ С‡Р°СЃС‚РѕС‚ РІ dB
     if amp_min>AmpArr[i] then amp_min:=AmpArr[i];
    end;
 
-   for i := 0 to N-1 do    // приведение к шкале с max значением = 0
+   for i := 0 to N-1 do    // РїСЂРёРІРµРґРµРЅРёРµ Рє С€РєР°Р»Рµ СЃ max Р·РЅР°С‡РµРЅРёРµРј = 0
    begin
     AmpArr[i]:=AmpArr[i]-amp_max;
    end;
 
    glGraphics1.glDrawMScale(0,0,Panel1,checklistbox1.Checked[0], N, 0, strtoint(Edit3.Text), step,  checklistbox1.Checked[1], 0, -(ceil(amp_max)-trunc(amp_min)), strtoint(Edit4.Text), 1, strtoint(Edit1.Text));
   end
-  else  if (N1.Checked=true) then        // выводим спектрограмму
+  else  if (N1.Checked=true) then        // РІС‹РІРѕРґРёРј СЃРїРµРєС‚СЂРѕРіСЂР°РјРјСѓ
   begin
    if RadioGroup1.ItemIndex=0 then
     CmxArrAmp:=VarArrayCreate([0, N-1], varVariant)
@@ -369,21 +369,21 @@ begin
 
    ws:=(glGraphics1.nSamples-(N div 2));
 
-   if ws>1000 then                      // перекрытие
+   if ws>1000 then                      // РїРµСЂРµРєСЂС‹С‚РёРµ
    begin
     step2:=ceil(ws/1000);
    end
    else step2:=1;
    size:=ws div step2;
 
-   ProgressBar1.Max:=size;            // расчитываем спектр окна
-   for i:=0 to size do                // цикл прохода по файлу окнами
+   ProgressBar1.Max:=size;            // СЂР°СЃС‡РёС‚С‹РІР°РµРј СЃРїРµРєС‚СЂ РѕРєРЅР°
+   for i:=0 to size do                // С†РёРєР» РїСЂРѕС…РѕРґР° РїРѕ С„Р°Р№Р»Сѓ РѕРєРЅР°РјРё
     begin
      ProgressBar1.Position:=i;
 
      for j := 0 to (N shl RadioGroup1.ItemIndex)-1 do
      begin
-      if (i*step2+j)<glGraphics1.nSamples then CmxArrAmp[j]:=TempBuf[i*step2+j]   // копируем отсчёты в комплексный массив
+      if (i*step2+j)<glGraphics1.nSamples then CmxArrAmp[j]:=TempBuf[i*step2+j]   // РєРѕРїРёСЂСѓРµРј РѕС‚СЃС‡С‘С‚С‹ РІ РєРѕРјРїР»РµРєСЃРЅС‹Р№ РјР°СЃСЃРёРІ
       else CmxArrAmp[j]:=VarComplexCreate(127,0);
      end;
 
@@ -391,7 +391,7 @@ begin
 
      for j := 0 to N-1 do
      begin
-      CmxArrAmp[j]:=20*math.Log10(VarComplexAbs(CmxArrAmp[j]/N));          // расчитываем амплитуды и заносим в массив
+      CmxArrAmp[j]:=20*math.Log10(VarComplexAbs(CmxArrAmp[j]/N));          // СЂР°СЃС‡РёС‚С‹РІР°РµРј Р°РјРїР»РёС‚СѓРґС‹ Рё Р·Р°РЅРѕСЃРёРј РІ РјР°СЃСЃРёРІ
      end;
 
      glGraphics1.glDrawMScale(7, i, Panel1, false, (N shl RadioGroup1.ItemIndex), 0, strtoint(Edit3.Text), step,  false, size, 0, strtoint(Edit4.Text), 1, strtoint(Edit1.Text));
@@ -412,27 +412,27 @@ begin
  hrc2 := wglCreateContext(dc2);
 end;
 
-procedure TSpectrum1.FormShow(Sender: TObject);   // При открытии окна построения спектрограммы
+procedure TSpectrum1.FormShow(Sender: TObject);   // РџСЂРё РѕС‚РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРїРµРєС‚СЂРѕРіСЂР°РјРјС‹
 var
  i,N:integer;
 begin
  N:=strtoint(Combobox1.Text);
- TCmxArr:=VarArrayCreate([0, N], varVariant);  // создание комплексного массива отсчётов
- AmpArr:=VarArrayCreate([0, N], varVariant);  // создание комплексного массива амплитуд частот
+ TCmxArr:=VarArrayCreate([0, N], varVariant);  // СЃРѕР·РґР°РЅРёРµ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ РјР°СЃСЃРёРІР° РѕС‚СЃС‡С‘С‚РѕРІ
+ AmpArr:=VarArrayCreate([0, N], varVariant);  // СЃРѕР·РґР°РЅРёРµ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ РјР°СЃСЃРёРІР° Р°РјРїР»РёС‚СѓРґ С‡Р°СЃС‚РѕС‚
 
- TrackBar1.Max:=glGraphics1.nSamples;      // max значение ползунка равно кол-ву отсчётов
- TrackBar1.SelStart:=0;                    // Начало выделения
- TrackBar1.SelEnd:=N;                      // конец
+ TrackBar1.Max:=glGraphics1.nSamples;      // max Р·РЅР°С‡РµРЅРёРµ РїРѕР»Р·СѓРЅРєР° СЂР°РІРЅРѕ РєРѕР»-РІСѓ РѕС‚СЃС‡С‘С‚РѕРІ
+ TrackBar1.SelStart:=0;                    // РќР°С‡Р°Р»Рѕ РІС‹РґРµР»РµРЅРёСЏ
+ TrackBar1.SelEnd:=N;                      // РєРѕРЅРµС†
 end;
 
 procedure TSpectrum1.N1Click(Sender: TObject);
-begin                              // Запрещаем перемещать ползунок так как строится
- TrackBar1.Enabled:=False;         // спектрограмма файла целиком
+begin                              // Р—Р°РїСЂРµС‰Р°РµРј РїРµСЂРµРјРµС‰Р°С‚СЊ РїРѕР»Р·СѓРЅРѕРє С‚Р°Рє РєР°Рє СЃС‚СЂРѕРёС‚СЃСЏ
+ TrackBar1.Enabled:=False;         // СЃРїРµРєС‚СЂРѕРіСЂР°РјРјР° С„Р°Р№Р»Р° С†РµР»РёРєРѕРј
 end;
 
 procedure TSpectrum1.N2Click(Sender: TObject);
-begin                              // Разрешить использование ползунка для прохода по файлу
- TrackBar1.Enabled:=True;          // для построения спектра участка файла
+begin                              // Р Р°Р·СЂРµС€РёС‚СЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РїРѕР»Р·СѓРЅРєР° РґР»СЏ РїСЂРѕС…РѕРґР° РїРѕ С„Р°Р№Р»Сѓ
+ TrackBar1.Enabled:=True;          // РґР»СЏ РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРїРµРєС‚СЂР° СѓС‡Р°СЃС‚РєР° С„Р°Р№Р»Р°
 end;
 
 end.
