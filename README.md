@@ -11,3 +11,10 @@
 
 
 ![Главное окно программы](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.jpg)
+
+> #### The quarterly results look great!
+>
+> - Revenue was off the chart.
+> - Profits were higher than ever.
+>
+>  *Everything* is going according to **plan**.
