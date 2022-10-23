@@ -1,1 +1,1 @@
-<p style="text-align:center"><h2>Speech Signal Analysis Software</h2></p>
+<p style="text-align:center">Speech Signal Analysis Software</p>
