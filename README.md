@@ -25,15 +25,15 @@
  ![Главное окно программы 1](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.jpg)
  <br><br>
  ![Главное окно программы 2](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/3.jpg)
- 
+ <br>
  *<h4>Возможность масштабирования сигналов:</h4>*
  
  ![Возможность масштабирования сигналов](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.png)
- 
+ <br>
  *<h4>Настройка масштаба шкалы:</h4>*
  
  ![Настройка масштаба шкалы](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/2.png)
- 
+ <br>
  *<h4>Окно анализа спектрограммы участка сигнала:</h4>*
  
  ![Окно анализа спектрограммы участка сигнала](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.gif)
