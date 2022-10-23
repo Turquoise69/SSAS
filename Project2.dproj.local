@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.441,C:\Users\MFPC\Documents\Embarcadero\Studio\Projects\Project2.dproj=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\VASIC\Project2.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.377,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Ogl.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\OpenGL.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.108,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window2.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.379,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window3.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.706,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.dfm=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.686,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.dfm=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.787,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.dfm=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.498,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.631,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window0.dfm=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.877,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\OpenGL.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.004,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.248,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window1.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.217,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.282,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.108,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window2.dfm=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.593,=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.693,=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.686,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.519,=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.162,=C:\Users\MFPC\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.102,C:\Users\MFPC\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\VASIC\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.380,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window3.dfm=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.706,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.778,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.43\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.631,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window0.pas=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.653,=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.787,C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Unit2.pas=C:\Users\MFPC\Desktop\Диплом\Vasic\v0.66\Spectrum.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.102,C:\Users\MFPC\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\VASIC\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.248,C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\window1.dfm=C:\Users\MFPC\Desktop\ИБ - '16\Курсовая\vasic\v0.61\Unit2.dfm</Transaction>
+    <Transaction>2022.10.22 21:26:25.594,Z:\UCHEBA\Старая программа\Final version for GitHub\window0.pas=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Ogl.pas"/>
+    <File Path="Unit1.pas"/>
+    <File Path="Unit1.dfm"/>
+    <File Path="window1.pas"/>
+    <File Path="window1.dfm"/>
+    <File Path="window2.pas"/>
+    <File Path="window2.dfm"/>
+    <File Path="window3.pas"/>
+    <File Path="window3.dfm"/>
+    <File Path="Spectrum.pas"/>
+    <File Path="Spectrum.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>
