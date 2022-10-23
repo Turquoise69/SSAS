@@ -23,7 +23,7 @@
  <h4>Главное окно программы (2 режима отображения окон сигнала):</h4>
  
  ![Главное окно программы 1](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.jpg)
- 
+ <br>
  ![Главное окно программы 2](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/3.jpg)
  
  <h4>Окно анализа спектрограммы участка сигнала:</h4>
