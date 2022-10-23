@@ -20,7 +20,8 @@
  <br>
  <h2>Изображения</h2>
  
- <p><h4>Главное окно программы:</h4></p>
+ <h4>Главное окно программы:</h4>
+ 
  ![Главное окно программы](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/1.jpg)
  
  
