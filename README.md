@@ -28,6 +28,8 @@
  
  <h4>Окно анализа спектрограммы участка сигнала:</h4>
  
+ ![fasdf](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/animation.gif)
+ 
  ![Окно анализа спектрограммы участка сигнала](https://github.com/Turquoise69/SSAS/blob/main/readme_assets/2.jpg)
   
  
